@@ -1,6 +1,5 @@
 $(function() {
   var url = 'https://restcountries.eu/rest/v1/name/';
-  var capital = 'https://restcountries.eu/rest/v2/capital/'
   var countriesList = $('#countries');
 
   $('#search').click(searchCountries);
@@ -13,7 +12,8 @@ $(function() {
     $.ajax({
       url: url + countryName,
       method: 'GET',
-      success: showCountriesList
+      success: showCountriesList,
+      error: errorMessage,
     })
   }
 
@@ -22,5 +22,9 @@ $(function() {
     resp.forEach(function(item) {
       $('<li>').text(item.name+', ' + item.capital).appendTo(countriesList);
     });
+  }
+  function errorMessage() {
+    countriesList.empty();
+    $('<li>').text('There is no country like this.').appendTo(countriesList);
   }
 })
